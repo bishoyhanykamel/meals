@@ -16,7 +16,7 @@ $(document).ready(() => {
 function setupNavBar(animDelay) {
   const navbarContentWidth = $("#navbarContent").innerWidth();
   $("#sideNavbar").css({ left: `-=${navbarContentWidth}` });
-  $("#navbarLinks li").css({ top: "300px"});
+  $("#navbarLinks li").css({ top: "300px" });
   $("#navbarToggler").click(() => {
     let width = $("#sideNavbar").css("left");
     if (width[0] !== "0") {
@@ -40,3 +40,12 @@ function closeNavbar(animDelay, navbarContentWidth) {
   $("#navbarToggler").removeClass("fa-x");
   $("#navbarLinks li").animate({ top: "300px" }, animDelay * 2);
 }
+
+async function readTest() {
+  console.log("hi");
+  const req = await fetch("./../test.html")
+    .then((res) => res.text())
+    .then((text) => $('routing').html(text));
+}
+
+readTest();
