@@ -43,7 +43,7 @@ function closeNavbar(animDelay, navbarContentWidth) {
 
 async function readTest() {
   console.log("hi");
-  const req = await fetch("./../test.html")
+  const req = await fetch("./../meals/test.html")
     .then((res) => res.text())
     .then((text) => $('routing').html(text));
 }
