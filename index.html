@@ -1,28 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Meals</title>
     <link rel="stylesheet" href="./css/bootstrap.min.css" />
     <link rel="stylesheet" href="./css/fontAwesome.all.min.css" />
     <link rel="stylesheet" href="./css/spinner.css" />
     <link rel="stylesheet" href="./css/index.css" />
-</head>
+  </head>
 
-<body class="overflow-hidden">
-    <div id="loader" class="d-flex align-items-center justify-content-center h-100 w-100 position-fixed bg-dark">
-        <span class="loading-spinner"></span>
+  <body class="overflow-hidden">
+    <div
+      id="loader"
+      class="d-flex align-items-center justify-content-center h-100 w-100 position-fixed bg-dark"
+    >
+      <span class="loading-spinner"></span>
     </div>
 
-    
+    <aside
+      id="sideNavbar"
+      class="position-absolute top-0 bottom-0 d-flex"
+    >
+      <div id="navbarContent" class="bg-dark p-4 text-white d-flex flex-column justify-content-between">
+        <ul class="list-unstyled">
+          <li>Item1</li>
+          <li>Item1</li>
+          <li>Item1</li>
+          <li>Item1</li>
+        </ul>
+        <div>
+            <p>Copyrights reservered 2024</p>
+            <p>Bishoy Hany</p>
+        </div>
+      </div>
+      <div class="py-4 px-3 bg-primary d-flex flex-column justify-content-between">
+        <i class="fas fa-gear fs-2"></i>
+        <i id="navbarToggler" class="fas fa-gear"></i>
+        <div>
+          <i class="fas fa-gear d-block"></i>
+          <i class="fas fa-gear d-block"></i>
+          <i class="fas fa-gear d-block"></i>
+        </div>
+      </div>
+    </aside>
 
     <script src="./js/bootstrap.bundle.min.js"></script>
     <script src="./js/fontAwesome.all.min.js"></script>
     <script src="./js/jquery.js"></script>
     <script src="./js/api.js"></script>
     <script src="./js/index.js"></script>
-</body>
-
+  </body>
 </html>
