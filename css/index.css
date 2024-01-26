@@ -1,7 +1,19 @@
 /****************************************************/
+/** General styling **/
+p {
+    margin: 0;
+}
+.bg-blue {
+    background-color: white;
+}
+
+
+/****************************************************/
 /** Sidebar styling **/
-
-
+#sideNavbar img {
+    width: 50px;
+    height: 50px;
+}
 
 
 
