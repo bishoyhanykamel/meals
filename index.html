@@ -14,28 +14,34 @@
 <body class="overflow-hidden bg-dark">
     <aside id="sideNavbar" class="position-absolute top-0 bottom-0 d-flex">
         <div id="navbarContent" class="bg-dark p-4 text-white d-flex flex-column justify-content-between">
-            <ul class="list-unstyled">
-                <li>Item1</li>
-                <li>Item1</li>
-                <li>Item1</li>
-                <li>Item1</li>
+            <ul id="navbarLinks" class="overflow-hidden list-unstyled">
+                <li class="position-relative py-3 cursor-pointer">Search</li>
+                <li class="position-relative py-3 cursor-pointer">Category</li>
+                <li class="position-relative py-3 cursor-pointer">Area</li>
+                <li class="position-relative py-3 cursor-pointer">Ingredients</li>
+                <li class="position-relative py-3 cursor-pointer">Contact us</li>
             </ul>
             <div>
-                <p>Copyrights reservered 2024</p>
-                <p>Bishoy Hany</p>
+                <p>
+                    <i class="fab fa-facebook"></i>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fas fa-globe"></i>
+                </p>
+                <p class="text-break">Copyrights reservered 2024 Bishoy Hany</p>
             </div>
         </div>
         <div class="text-center text-dark d-flex flex-column justify-content-between bg-blue align-items-center py-3">
             <img src="./assets/logo.png" class="" alt="">
             <i id="navbarToggler" class="fa-solid fa-bars fa-2xl d-block p-3"></i>
             <div>
-                <i class="fas fa-gear d-block"></i>
-                <i class="fas fa-gear d-block"></i>
-                <i class="fas fa-gear d-block"></i>
+                <i class="fas fa-globe d-block mb-2"></i>
+                <i class="fas fa-share-nodes d-block"></i>
             </div>
         </div>
     </aside>
 
+
+    
     <div id="loader" class="d-flex align-items-center justify-content-center h-100 w-100 position-fixed bg-dark">
         <span class="loading-spinner"></span>
     </div>

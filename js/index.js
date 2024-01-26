@@ -1,7 +1,7 @@
 "use strict";
 
 $(document).ready(() => {
-  setNavBar();
+  setupNavBar(500);
   // Get all meals to populate website
   const res = getMeals();
   res.then((data) => {
@@ -13,15 +13,30 @@ $(document).ready(() => {
   });
 });
 
-function setNavBar() {
+function setupNavBar(animDelay) {
   const navbarContentWidth = $("#navbarContent").innerWidth();
   $("#sideNavbar").css({ left: `-=${navbarContentWidth}` });
+  $("#navbarLinks li").css({ top: "300px"});
   $("#navbarToggler").click(() => {
     let width = $("#sideNavbar").css("left");
     if (width[0] !== "0") {
-      $("#sideNavbar").animate({ left: "0px" }, 500);
+      openNavbar(animDelay);
     } else {
-      $("#sideNavbar").animate({ left: `-=${navbarContentWidth}` }, 500);
+      closeNavbar(animDelay, navbarContentWidth);
     }
   });
+}
+
+function openNavbar(animDelay) {
+  $("#sideNavbar").animate({ left: "0px" }, animDelay);
+  $("#navbarLinks li").animate({ top: "0px" }, animDelay);
+  $("#navbarToggler").removeClass("fa-bars");
+  $("#navbarToggler").addClass("fa-x");
+}
+
+function closeNavbar(animDelay, navbarContentWidth) {
+  $("#sideNavbar").animate({ left: `-=${navbarContentWidth}` }, animDelay);
+  $("#navbarToggler").addClass("fa-bars");
+  $("#navbarToggler").removeClass("fa-x");
+  $("#navbarLinks li").animate({ top: "300px" }, animDelay * 2);
 }
