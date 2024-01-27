@@ -4,7 +4,7 @@ const PRODUCTION = false;
 $(document).ready(() => {
   setupNavBar(500);
   mapLinksToRoutes();
-  loadNewPage('home');
+  loadNewPage("home");
 });
 
 ///////////////////////////////////////////////////////////////////////////
@@ -46,8 +46,15 @@ async function loadMealPage() {
   return await req.text();
 }
 
+async function loadMealDetailsPage() {
+  const req = await fetch(
+    `./..${PRODUCTION ? "/meals" : "/"}components/mealdetails.html`
+  );
+  return await req.text();
+}
+
 ///////////////////////////////////////////////////////////////////////////
-// Modeling data to components
+// Modeling data to components (Updating UI)
 function generateMeals(meals, literal) {
   let template = "";
   for (let i = 0; i < meals.length; i++) {
@@ -56,6 +63,33 @@ function generateMeals(meals, literal) {
 
     template += temp;
   }
+  $("#routing").html(template);
+}
+
+function generateMealDetails(meal, literal) {
+  let template = "";
+  let recipesTemplate = ``;
+
+  const objArray = Object.entries(meal);
+  for (let i = 1; i <= 20; i++) {
+    const ingredient = objArray[`strIngredient${i}`];
+    const measure = objArray[`strMeasure${i}`];
+    if (ingredient.length > 0) {
+      recipesTemplate += `<span class="d-inline-block px-3 py-1 bg-info text-info">${measure} ${ingredient}</span>`;
+    } else continue;
+  }
+
+  template = literal
+    .replace("%MEAL_IMG%", meal.strMealThumb)
+    .replace("%MEAL_NAME%", meal.strMeal)
+    .replace("%INSTRUCTIONS%", meal.strInstructions)
+    .replace("%AREA%", meal.strArea)
+    .replace("%CATEGORY%", meal.strCategory)
+    .replace("%RECIPES%", recipesTemplate)
+    .replace("%TAGS%", meal.strTags === null ? "" : meal.strTags)
+    .replace("%SOURCE%", meal.strSource)
+    .replace("%YOUTUBE%", meal.strYoutube);
+
   $("#routing").html(template);
 }
 
@@ -97,7 +131,17 @@ function loadNewPage(page) {
         });
       }
       break;
-
+    case "mealDetails": {
+      const apiRes = getMealById(/* store meal id in local storage */);
+      const fileRes = loadMealDetailsPage();
+      apiRes.then((data) => {
+        fileRes.then((text) => {
+          generateMealDetails(data, text);
+          finishLoading();
+        });
+      });
+      break;
+    }
     default: {
       const apiRes = getMeals();
       const fileRes = loadMealPage();
