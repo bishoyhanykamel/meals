@@ -72,12 +72,19 @@ function generateMealDetails(meal, literal) {
   let template = "";
   let recipesTemplate = ``;
   const ingredients = [];
+  const measures = [];
   const objArray = Object.entries(meal);
   objArray.forEach(([key, val], i) => {
-    if (key.startsWith("strIngredient")) {
-      if (val.length > 0) console.log(val);
-    }
+    if (key.startsWith("strIngredient"))
+      if (val.length > 0) ingredients.push(val);
+    if (key.startsWith("strMeasure")) if (val.length > 0) measures.push(val);
   });
+  for (let i = 0; i < ingredients.length; i++) {
+    recipesTemplate += 
+    `<span class="d-inline-block px-3 py-1 bg-primary m-2 text-white bg-opacity-10 rounded-3">
+    ${measures[i]} ${ingredients[i]}
+    </span>`;
+  }
   // for (let i = 1; i <= 20; i++) {
   //   const ingredient = objArray[`strIngredient${i}`];
   //   const measure = objArray[`strMeasure${i}`];
