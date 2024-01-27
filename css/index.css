@@ -7,6 +7,14 @@ p {
     background-color: white;
 }
 
+.overlay-anim {
+    top: 150%;
+    transition: top 0.4s;
+}
+
+.meal-card:hover .overlay-anim {
+    top: 0;
+}
 
 /****************************************************/
 /** Sidebar styling **/

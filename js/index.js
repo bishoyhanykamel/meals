@@ -1,14 +1,19 @@
 "use strict";
+const PRODUCTION = false;
 
 $(document).ready(() => {
   setupNavBar(500);
   // Get all meals to populate website
-  const res = getMeals();
-  res.then((data) => {
-    console.log(data);
-    $("#loader").fadeOut(1000, () => {
-      $("#loader").removeClass("d-flex");
-      $("body").removeClass("overflow-hidden");
+  const apiRes = getMeals();
+  const fileRes = loadMealPage();
+  apiRes.then((data) => {
+    console.log("s", data);
+    fileRes.then((text) => {
+      generateMeals(data.meals, text);
+      $("#loader").fadeOut(1000, () => {
+        $("#loader").removeClass("d-flex");
+        $("body").removeClass("overflow-hidden");
+      });
     });
   });
 });
@@ -41,11 +46,18 @@ function closeNavbar(animDelay, navbarContentWidth) {
   $("#navbarLinks li").animate({ top: "300px" }, animDelay * 2);
 }
 
-async function readTest() {
-  console.log("hi");
-  const req = await fetch("./../meals/test.html")
-    .then((res) => res.text())
-    .then((text) => $('routing').html(text));
+async function loadMealPage() {
+  const req = await fetch(`./..${PRODUCTION ? "/meals" : "/"}components/mealcard.html`);
+  return await req.text();
 }
 
-readTest();
+function generateMeals(meals, literal) {
+  let template = "";
+  for (let i = 0; i < meals.length; i++) {
+    let temp = literal.replace("%MEAL_IMG%", meals[i].strMealThumb);
+
+    template += temp;
+  }
+  $("#routing").html(template);
+}
+
