@@ -15,11 +15,11 @@
     <aside id="sideNavbar" class="position-fixed top-0 bottom-0 h-100 d-flex">
         <div id="navbarContent" class="bg-dark p-4 text-white d-flex flex-column justify-content-between">
             <ul id="navbarLinks" class="overflow-hidden list-unstyled">
-                <li class="position-relative py-3 cursor-pointer">Search</li>
-                <li class="position-relative py-3 cursor-pointer">Category</li>
-                <li class="position-relative py-3 cursor-pointer">Area</li>
-                <li class="position-relative py-3 cursor-pointer">Ingredients</li>
-                <li class="position-relative py-3 cursor-pointer">Contact us</li>
+                <li class="position-relative py-3 cursor-pointer" id="searchLink">Search</li>
+                <li class="position-relative py-3 cursor-pointer" id="categoryLink">Category</li>
+                <li class="position-relative py-3 cursor-pointer" id="areaLink">Area</li>
+                <li class="position-relative py-3 cursor-pointer" id="ingredientsLink">Ingredients</li>
+                <li class="position-relative py-3 cursor-pointer" id="contactLink">Contact us</li>
             </ul>
             <div>
                 <p>
@@ -39,7 +39,7 @@
             </div>
         </div>
     </aside>
-    <div class="container g-4 p-5">
+    <div class="container g-4 p-5 d-none" id="routingDiv">
         <div id="routing" class="row g-4">
         </div>
     </div>

@@ -7,18 +7,15 @@ $(document).ready(() => {
   const apiRes = getMeals();
   const fileRes = loadMealPage();
   apiRes.then((data) => {
-    console.log("s", data);
+    console.log("Document ready - data fetched: ", data);
     fileRes.then((text) => {
       generateMeals(data.meals, text);
-      $("#loader").fadeOut(1000, () => {
-        $("#loader").removeClass("d-flex");
-        $("body").removeClass("overflow-hidden");
-      });
+      finishLoading();
     });
   });
 });
 
-//////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 // Navbar functions
 function setupNavBar(animDelay) {
   const navbarContentWidth = $("#navbarContent").innerWidth();
@@ -48,7 +45,7 @@ function closeNavbar(animDelay, navbarContentWidth) {
   $("#navbarLinks li").animate({ top: "300px" }, animDelay * 2);
 }
 
-//////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 // Component loading functions
 async function loadMealPage() {
   const req = await fetch(
@@ -57,7 +54,7 @@ async function loadMealPage() {
   return await req.text();
 }
 
-//////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 // Modeling data to components
 function generateMeals(meals, literal) {
   let template = "";
@@ -68,4 +65,20 @@ function generateMeals(meals, literal) {
     template += temp;
   }
   $("#routing").html(template);
+}
+
+///////////////////////////////////////////////////////////////////////////
+// Loading page
+function finishLoading() {
+  $("#loader").fadeOut(1000, function () {
+    $("body").removeClass("overflow-hidden");
+    $("#loader").removeClass("d-flex");
+    $('#routingDiv').removeClass('d-none');
+  });
+}
+
+function startLoading() {
+  $("#loader").addClass("d-flex");
+  $("body").addClass("overflow-hidden");
+  $('#routingDiv').addClass('d-none');
 }
