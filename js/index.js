@@ -18,9 +18,11 @@ $(document).ready(() => {
   });
 });
 
+//////////////////////////////////////////////////////
+// Navbar functions
 function setupNavBar(animDelay) {
   const navbarContentWidth = $("#navbarContent").innerWidth();
-  $("#sideNavbar").css({ left: `-=${navbarContentWidth}` });
+  $("#sideNavbar").css({ left: `-=${navbarContentWidth}`, zIndex: 10 });
   $("#navbarLinks li").css({ top: "300px" });
   $("#navbarToggler").click(() => {
     let width = $("#sideNavbar").css("left");
@@ -46,18 +48,24 @@ function closeNavbar(animDelay, navbarContentWidth) {
   $("#navbarLinks li").animate({ top: "300px" }, animDelay * 2);
 }
 
+//////////////////////////////////////////////////////////////
+// Component loading functions
 async function loadMealPage() {
-  const req = await fetch(`./..${PRODUCTION ? "/meals" : "/"}components/mealcard.html`);
+  const req = await fetch(
+    `./..${PRODUCTION ? "/meals" : "/"}components/mealcard.html`
+  );
   return await req.text();
 }
 
+//////////////////////////////////////////////////////////////
+// Modeling data to components
 function generateMeals(meals, literal) {
   let template = "";
   for (let i = 0; i < meals.length; i++) {
     let temp = literal.replace("%MEAL_IMG%", meals[i].strMealThumb);
+    temp = temp.replace("%MEAL_NAME%", meals[i].strMeal);
 
     template += temp;
   }
   $("#routing").html(template);
 }
-
