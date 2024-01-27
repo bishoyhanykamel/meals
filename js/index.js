@@ -1,5 +1,5 @@
 "use strict";
-const PRODUCTION = false;
+const PRODUCTION = true;
 
 $(document).ready(() => {
   setupNavBar(500);
