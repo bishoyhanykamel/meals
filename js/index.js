@@ -41,14 +41,14 @@ function closeNavbar(animDelay, navbarContentWidth) {
 // Component loading functions
 async function loadMealPage() {
   const req = await fetch(
-    `./..${PRODUCTION ? "/meals" : "/"}components/mealcard.html`
+    `./..${PRODUCTION ? "/meals/" : "/"}components/mealcard.html`
   );
   return req.text();
 }
 
 async function loadMealDetailsPage() {
   const req = await fetch(
-    `./..${PRODUCTION ? "/meals" : "/"}components/mealdetails.html`
+    `./..${PRODUCTION ? "/meals/" : "/"}components/mealdetails.html`
   );
   return req.text();
 }
