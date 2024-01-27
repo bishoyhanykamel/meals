@@ -3,16 +3,8 @@ const PRODUCTION = false;
 
 $(document).ready(() => {
   setupNavBar(500);
-  // Get all meals to populate website
-  const apiRes = getMeals();
-  const fileRes = loadMealPage();
-  apiRes.then((data) => {
-    console.log("Document ready - data fetched: ", data);
-    fileRes.then((text) => {
-      generateMeals(data.meals, text);
-      finishLoading();
-    });
-  });
+  mapLinksToRoutes();
+  loadNewPage('home');
 });
 
 ///////////////////////////////////////////////////////////////////////////
@@ -69,16 +61,61 @@ function generateMeals(meals, literal) {
 
 ///////////////////////////////////////////////////////////////////////////
 // Loading page
+function startLoading() {
+  $("#loader").addClass("d-flex");
+  $("body").addClass("overflow-hidden");
+  $("#routingDiv").addClass("d-none");
+}
+
 function finishLoading() {
   $("#loader").fadeOut(1000, function () {
     $("body").removeClass("overflow-hidden");
     $("#loader").removeClass("d-flex");
-    $('#routingDiv').removeClass('d-none');
+    $("#routingDiv").removeClass("d-none");
   });
 }
 
-function startLoading() {
-  $("#loader").addClass("d-flex");
-  $("body").addClass("overflow-hidden");
-  $('#routingDiv').addClass('d-none');
+///////////////////////////////////////////////////////////////////////////
+// Setup routing
+function prepareNewPage() {
+  $("#routing").html("");
+  startLoading();
+}
+function loadNewPage(page) {
+  prepareNewPage();
+  switch (page) {
+    case "search":
+      {
+        const apiRes = getMeals();
+        const fileRes = loadMealPage();
+        apiRes.then((data) => {
+          console.log("Search page loaded - data fetched: ", data);
+          fileRes.then((text) => {
+            generateMeals(data.meals, text);
+            finishLoading();
+          });
+        });
+      }
+      break;
+
+    default: {
+      const apiRes = getMeals();
+      const fileRes = loadMealPage();
+      console.log("s");
+      apiRes.then((data) => {
+        console.log("Document ready - data fetched: ", data);
+        fileRes.then((text) => {
+          generateMeals(data.meals, text);
+          finishLoading();
+        });
+      });
+    }
+  }
+}
+function mapLinksToRoutes() {
+  $("#searchLink").on("click", () => loadNewPage("search"));
+  $("#categoryLink").on("click", () => loadNewPage("category"));
+  $("#areaLink").on("click", () => loadNewPage("area"));
+  $("#ingredientsLink").on("click", () => loadNewPage("ingredients"));
+  $("#contactLink").on("click", () => loadNewPage("contact"));
 }
