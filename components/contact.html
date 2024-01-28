@@ -1,59 +1,88 @@
-<div class="col-md-6">
-  <input
-    type="text"
-    class="form-control px-3 py-2"
-    placeholder="Enter your name"
-    id="nameInput"
-    name="name"
-  />
-</div>
-<div class="col-md-6">
-  <input
-    type="email"
-    class="form-control px-3 py-2"
-    placeholder="Enter your Email"
-    id="emailInput"
-    name="email"
-  />
-</div>
-<div class="col-md-6">
-  <input
-    type="number"
-    class="form-control px-3 py-2"
-    placeholder="Enter your Phone"
-    id="phoneInput"
-    name="phoneNumber"
-  />
-</div>
-<div class="col-md-6">
-  <input
-    type="text"
-    class="form-control px-3 py-2"
-    placeholder="Enter your Age"
-    id="ageInput"
-    max="100"
-    min="1"
-    name="age"
-  />
-</div>
-<div class="col-md-6">
-  <input
-    type="password"
-    class="form-control px-3 py-2"
-    placeholder="Enter your password"
-    id="passwordInput"
-    name="password"
-  />
-</div>
-<div class="col-md-6">
-  <input
-    type="password"
-    class="form-control px-3 py-2"
-    placeholder="Confirm your password"
-    id="confirmPasswordInput"
-    name="confirmPassword"
-  />
-</div>
-<div class="col-12 text-center">
-  <button class="btn btn-outline-danger px-3 py-2" disabled>Submit</button>
+<div class="row g-4" id="formsPage">
+  <div class="col-md-6">
+    <label for="nameInput" class="d-none text-danger" id="nameLabel">
+      Please enter a valid name. Ex: John Doe
+    </label>
+    <input
+      type="text"
+      class="form-control px-3 py-2"
+      placeholder="Enter your name"
+      id="nameInput"
+      name="name"
+    />
+  </div>
+  <div class="col-md-6">
+    <label for="emailInput" class="d-none text-danger" id="emailLabel">
+      Please enter a valid email. Ex: user@gmail.com
+    </label>
+    <input
+      type="email"
+      class="form-control px-3 py-2"
+      placeholder="Enter your Email"
+      id="emailInput"
+      name="email"
+    />
+  </div>
+  <div class="col-md-6">
+    <label for="phoneInput" class="d-none text-danger" id="phoneLabel">
+      Please enter a valid Egyptian Phone Number starting with (010/011/012/15)
+    </label>
+    <input
+      type="number"
+      class="form-control px-3 py-2"
+      placeholder="Enter your Phone"
+      id="phoneInput"
+      name="phoneNumber"
+    />
+  </div>
+  <div class="col-md-6">
+    <label for="ageInput" class="d-none text-danger" id="ageLabel">
+      Age must be between 1 and 100.
+    </label>
+    <input
+      type="text"
+      class="form-control px-3 py-2"
+      placeholder="Enter your Age"
+      id="ageInput"
+      max="100"
+      min="1"
+      name="age"
+    />
+  </div>
+  <div class="col-md-6">
+    <label for="passwordInput" class="d-none text-danger" id="passwordLabel">
+    </label>
+    <input
+      type="password"
+      class="form-control px-3 py-2"
+      placeholder="Enter your password"
+      id="passwordInput"
+      name="password"
+    />
+  </div>
+  <div class="col-md-6">
+    <label
+      for="confirmPasswordInput"
+      class="d-none text-danger"
+      id="confirmLabel"
+    >
+      Passwords do not match.
+    </label>
+    <input
+      type="password"
+      class="form-control px-3 py-2"
+      placeholder="Confirm your password"
+      id="confirmPasswordInput"
+      name="confirmPassword"
+    />
+  </div>
+  <div class="col-12 text-center">
+    <button
+      class="btn btn-outline-danger px-3 py-2"
+      disabled
+      id="formSubmitBtn"
+    >
+      Submit
+    </button>
+  </div>
 </div>

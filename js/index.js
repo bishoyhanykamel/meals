@@ -1,5 +1,5 @@
 "use strict";
-const PRODUCTION = false;
+const PRODUCTION = true;
 
 $(document).ready(() => {
   setupNavBar(500);
@@ -87,8 +87,7 @@ function generateMealDetails(meal, literal) {
     if (key.startsWith("strMeasure")) if (val.length > 0) measures.push(val);
   });
   for (let i = 0; i < ingredients.length; i++) {
-    recipesTemplate += 
-    `<span class="d-inline-block px-3 py-1 bg-primary m-2 text-white bg-opacity-10 rounded-3">
+    recipesTemplate += `<span class="d-inline-block px-3 py-1 bg-primary m-2 text-white bg-opacity-10 rounded-3">
     ${measures[i]} ${ingredients[i]}
     </span>`;
   }
@@ -110,6 +109,7 @@ function generateMealDetails(meal, literal) {
 // Contact Page
 function generateContactPage(literal) {
   $("#routing").html(literal);
+  // contactPageValidations();
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -165,10 +165,10 @@ function loadNewPage(page, idx = 0) {
     }
     case "contact": {
       const fileRes = loadContactPage();
-      fileRes.then(model => {
+      fileRes.then((model) => {
         generateContactPage(model);
         finishLoading();
-      })
+      });
       break;
     }
     default: {
@@ -195,3 +195,30 @@ function mapLinksToRoutes() {
 function prepareMealDetails(meal) {
   loadNewPage("mealDetails", meal.getAttribute("--meal-id"));
 }
+
+///////////////////////////////////////////////////////////////////////////
+// Helper functions
+
+// function contactPageValidations() {
+//   // regex patterns
+//   const nameRegex = /^[A-Za-z]$/;
+//   const emailRegex = /@.com/;
+
+//   let nameValid = false;
+//   let emailValid = false;
+//   let phoneNumber = false;
+//   let ageValid = false;
+//   let passwordConfirmed = false;
+//   $("#nameInput").on("keyup", () => {
+//     if (nameRegex.test($(this).val() == true)) {
+//       nameValid = true;
+//       $('#nameLabel').addClass('d-none');
+//     } else
+//       $("#nameLabel").removeClass("d-none");
+//       nameValid = false;
+//   });
+
+//   $('#formsPage').on('hover', () => {
+//     $('#formSubmitBtn').attr('disabled') = (nameValid && emailValid && phoneNumber && ageValid && passwordConfirmed);
+//   })
+// }
