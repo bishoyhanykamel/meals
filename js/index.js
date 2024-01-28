@@ -1,5 +1,5 @@
 "use strict";
-const PRODUCTION = true;
+const PRODUCTION = false;
 
 $(document).ready(() => {
   setupNavBar(500);
@@ -52,9 +52,15 @@ async function loadMealDetailsPage() {
   );
   return req.text();
 }
-
+async function loadContactPage() {
+  const req = await fetch(
+    `./..${PRODUCTION ? "/meals/" : "/"}components/contact.html`
+  );
+  return req.text();
+}
 ///////////////////////////////////////////////////////////////////////////
 // Modeling data to components (Updating UI)
+// Meals
 function generateMeals(meals, literal) {
   let template = "";
   for (let i = 0; i < meals.length; i++) {
@@ -73,6 +79,7 @@ function generateMealDetails(meal, literal) {
   let recipesTemplate = ``;
   const ingredients = [];
   const measures = [];
+
   const objArray = Object.entries(meal);
   objArray.forEach(([key, val], i) => {
     if (key.startsWith("strIngredient"))
@@ -85,13 +92,6 @@ function generateMealDetails(meal, literal) {
     ${measures[i]} ${ingredients[i]}
     </span>`;
   }
-  // for (let i = 1; i <= 20; i++) {
-  //   const ingredient = objArray[`strIngredient${i}`];
-  //   const measure = objArray[`strMeasure${i}`];
-  //   if (ingredient !== null) {
-  //     recipesTemplate += `<span class="d-inline-block px-3 py-1 bg-info text-info">${measure} ${ingredient}</span>`;
-  //   } else continue;
-  // }
 
   template = literal
     .replace("%MEAL_IMG%", meal.strMealThumb)
@@ -105,6 +105,11 @@ function generateMealDetails(meal, literal) {
     .replace("%YOUTUBE%", meal.strYoutube);
 
   $("#routing").html(template);
+}
+
+// Contact Page
+function generateContactPage(literal) {
+  $("#routing").html(literal);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -140,8 +145,8 @@ function loadNewPage(page, idx = 0) {
         const fileRes = loadMealPage();
         apiRes.then((data) => {
           console.log("Search page loaded - data fetched: ", data);
-          fileRes.then((text) => {
-            generateMeals(data.meals, text);
+          fileRes.then((model) => {
+            generateMeals(data.meals, model);
             finishLoading();
           });
         });
@@ -151,11 +156,19 @@ function loadNewPage(page, idx = 0) {
       const apiRes = getMealById(idx);
       const fileRes = loadMealDetailsPage();
       apiRes.then((data) => {
-        fileRes.then((text) => {
-          generateMealDetails(data.meals[0], text);
+        fileRes.then((model) => {
+          generateMealDetails(data.meals[0], model);
           finishLoading();
         });
       });
+      break;
+    }
+    case "contact": {
+      const fileRes = loadContactPage();
+      fileRes.then(model => {
+        generateContactPage(model);
+        finishLoading();
+      })
       break;
     }
     default: {
@@ -163,8 +176,8 @@ function loadNewPage(page, idx = 0) {
       const fileRes = loadMealPage();
       apiRes.then((data) => {
         console.log("Document ready - data fetched: ", data);
-        fileRes.then((text) => {
-          generateMeals(data.meals, text);
+        fileRes.then((model) => {
+          generateMeals(data.meals, model);
           finishLoading();
         });
       });
