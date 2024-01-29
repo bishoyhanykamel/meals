@@ -1,5 +1,5 @@
 "use strict";
-const PRODUCTION = true;
+const PRODUCTION = false;
 
 $(document).ready(() => {
   setupNavBar(500);
@@ -52,6 +52,14 @@ async function loadMealDetailsPage() {
   );
   return req.text();
 }
+
+async function loadCategoriesPage() {
+  const req = await fetch(
+    `./..${PRODUCTION ? "/meals/" : "/"}components/category.html`
+  );
+  return req.text();
+}
+
 async function loadContactPage() {
   const req = await fetch(
     `./..${PRODUCTION ? "/meals/" : "/"}components/contact.html`
@@ -103,6 +111,22 @@ function generateMealDetails(meal, literal) {
     .replace("%SOURCE%", meal.strSource)
     .replace("%YOUTUBE%", meal.strYoutube);
 
+  $("#routing").html(template);
+}
+
+// Categories
+function generateCategoriesPage(categories, literal) {
+  let template = "";
+  for (let i = 0; i < categories.length; i++) {
+    template += literal
+      .replace("%CATEGORY_STR%", categories[i].strCategory)
+      .replace("%CATEGORY_IMG%", categories[i].strCategoryThumb)
+      .replace("%CATEGORY_NAME%", categories[i].strCategory)
+      .replace(
+        "%CATEGORY_DESC%",
+        categories[i].strCategoryDescription.split(".")[0]
+      );
+  }
   $("#routing").html(template);
 }
 
@@ -161,6 +185,17 @@ function loadNewPage(page, idx = 0) {
           finishLoading();
         });
       });
+      break;
+    }
+    case "category": {
+      const apiRes = getCategories();
+      const fileRes = loadCategoriesPage();
+      apiRes.then((data) => {
+        fileRes.then((model) => {
+          generateCategoriesPage(data.categories, model);
+          finishLoading();
+        })
+      })
       break;
     }
     case "contact": {

@@ -14,3 +14,13 @@ const getMealById = async function(id) {
   const req = await fetch(`${BASE_URL}lookup.php?i=${id}`);
   return req.json();
 }
+
+const getCategories = async function() {
+  const req = await fetch(`${BASE_URL}categories.php`);
+  return req.json();
+}
+
+const getMealsByCategory = async function(category) {
+  const req = await fetch(`${BASE_URL}filter.php?c=${category}`);
+  return req.json();
+}
