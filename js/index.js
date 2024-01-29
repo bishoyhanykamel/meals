@@ -194,8 +194,19 @@ function loadNewPage(page, idx = 0) {
         fileRes.then((model) => {
           generateCategoriesPage(data.categories, model);
           finishLoading();
-        })
-      })
+        });
+      });
+      break;
+    }
+    case "mealsByCategory": {
+      const apiRes = getMealsByCategory(idx);
+      const fileRes = loadMealPage();
+      apiRes.then((data) => {
+        fileRes.then((model) => {
+          generateMeals(data.meals, model);
+          finishLoading();
+        });
+      });
       break;
     }
     case "contact": {
@@ -231,6 +242,9 @@ function prepareMealDetails(meal) {
   loadNewPage("mealDetails", meal.getAttribute("--meal-id"));
 }
 
+function prepareMealsByCategory(category) {
+  loadNewPage("mealsByCategory", category.getAttribute("--category-str"));
+}
 ///////////////////////////////////////////////////////////////////////////
 // Helper functions
 
