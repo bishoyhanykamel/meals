@@ -59,6 +59,12 @@ async function loadCategoriesPage() {
   );
   return req.text();
 }
+async function loadAreaPage() {
+  const req = await fetch(
+    `./..${PRODUCTION ? "/meals/" : "/"}components/area.html`
+  );
+  return req.text();
+}
 
 async function loadContactPage() {
   const req = await fetch(
@@ -130,6 +136,15 @@ function generateCategoriesPage(categories, literal) {
   $("#routing").html(template);
 }
 
+// Areas 
+function generateAreaPage(areas, literal) {
+  let template = "";
+  for (let i = 0; i < areas.length; i++) {
+    template += literal.replaceAll('%AREA_STR%', areas[i].strArea);
+  }
+  $("#routing").html(template);
+}
+
 // Contact Page
 function generateContactPage(literal) {
   $("#routing").html(literal);
@@ -163,25 +178,12 @@ function prepareNewPage() {
 function loadNewPage(page, idx = 0) {
   prepareNewPage();
   switch (page) {
-    case "search":
-      {
-        const apiRes = getMeals();
-        const fileRes = loadMealPage();
-        apiRes.then((data) => {
-          console.log("Search page loaded - data fetched: ", data);
-          fileRes.then((model) => {
-            generateMeals(data.meals, model);
-            finishLoading();
-          });
-        });
-      }
-      break;
-    case "mealDetails": {
-      const apiRes = getMealById(idx);
-      const fileRes = loadMealDetailsPage();
+    case "search": {
+      const apiRes = getMeals();
+      const fileRes = loadMealPage();
       apiRes.then((data) => {
         fileRes.then((model) => {
-          generateMealDetails(data.meals[0], model);
+          generateMeals(data.meals, model);
           finishLoading();
         });
       });
@@ -198,6 +200,36 @@ function loadNewPage(page, idx = 0) {
       });
       break;
     }
+    case "area": {
+      const apiRes = getAreas();
+      const fileRes = loadAreaPage();
+      apiRes.then((data) => {
+        fileRes.then((model) => {
+          generateAreaPage(data.meals, model);
+          finishLoading();
+        });
+      });
+      break;
+    }
+    case "contact": {
+      const fileRes = loadContactPage();
+      fileRes.then((model) => {
+        generateContactPage(model);
+        finishLoading();
+      });
+      break;
+    }
+    case "mealDetails": {
+      const apiRes = getMealById(idx);
+      const fileRes = loadMealDetailsPage();
+      apiRes.then((data) => {
+        fileRes.then((model) => {
+          generateMealDetails(data.meals[0], model);
+          finishLoading();
+        });
+      });
+      break;
+    }
     case "mealsByCategory": {
       const apiRes = getMealsByCategory(idx);
       const fileRes = loadMealPage();
@@ -209,11 +241,14 @@ function loadNewPage(page, idx = 0) {
       });
       break;
     }
-    case "contact": {
-      const fileRes = loadContactPage();
-      fileRes.then((model) => {
-        generateContactPage(model);
-        finishLoading();
+    case "mealsByArea": {
+      const apiRes = getMealsByArea(idx);
+      const fileRes = loadMealPage();
+      apiRes.then((data) => {
+        fileRes.then((model) => {
+          generateMeals(data.meals, model);
+          finishLoading();
+        });
       });
       break;
     }
@@ -244,6 +279,10 @@ function prepareMealDetails(meal) {
 
 function prepareMealsByCategory(category) {
   loadNewPage("mealsByCategory", category.getAttribute("--category-str"));
+}
+
+function prepareMealsByArea(area) {
+  loadNewPage("mealsByArea", area.getAttribute("--area-str"));
 }
 ///////////////////////////////////////////////////////////////////////////
 // Helper functions
